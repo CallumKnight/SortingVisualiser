@@ -22,18 +22,6 @@ DataDisplay::~DataDisplay(){
     delete sortingAlgorithm;
 }
 
-void DataDisplay::setup(int numElements, int dispWidth, int dispHeight){
-
-    // May need a check for invalid inputs (numElements < 2)
-
-    setDisplayDimensions(dispWidth, dispHeight);
-    generateRandomElements(numElements);
-
-    start = false;
-    swappingElements = false;
-    swapOffset = 0;
-}
-
 void DataDisplay::update(){
 
     if(start && !swappingElements){
@@ -51,15 +39,12 @@ void DataDisplay::draw(){
     float barSpacing = 0.4*(static_cast<float>(displayWidth)/elements.size());
     float barWidth = 0.6*(static_cast<float>(displayWidth)/elements.size());
     float barFootprint = barSpacing + barWidth;
-    
-    int barOutlineColor = 255;
-    ofBackground(ofColor::black);
 
     for(int i = 0; i < elements.size(); i++){
 
-        int r = (elements[i]/displayHeight)*255;
-        int g = (elements[i]/displayHeight)*100;
-        int b = (elements[i]/displayHeight)*100;
+        int r = (elements[i]/displayHeight)*barColorR;
+        int g = (elements[i]/displayHeight)*barColorG;
+        int b = (elements[i]/displayHeight)*barColorB;
 
         if(i == sortingAlgorithm->getElementIndex()){
 
@@ -67,7 +52,7 @@ void DataDisplay::draw(){
             ofSetColor(r, g, b);
             ofDrawRectangle((barFootprint*i) + swapOffset, ofGetHeight(), barWidth, elements[i]*(-1));
             ofNoFill();  
-            ofSetColor(barOutlineColor);
+            ofSetColor(barColorContour);
             ofDrawRectangle((barFootprint*i) + swapOffset, ofGetHeight(), barWidth, elements[i]*(-1));
         }
         else if(i == sortingAlgorithm->getCompareElementIndex()){
@@ -76,7 +61,7 @@ void DataDisplay::draw(){
             ofSetColor(r, g, b);
             ofDrawRectangle((barFootprint*i) - swapOffset, ofGetHeight(), barWidth, elements[i]*(-1));
             ofNoFill();  
-            ofSetColor(barOutlineColor);
+            ofSetColor(barColorContour);
             ofDrawRectangle((barFootprint*i) - swapOffset, ofGetHeight(), barWidth, elements[i]*(-1));
         }
         else{
@@ -115,6 +100,25 @@ void DataDisplay::togglePlayback(){
     
     start = !start;
 }
+
+void DataDisplay::setColors(int r, int g, int b, int contour, int background){
+
+    barColorR = r;
+    barColorG = g;
+    barColorB = b;
+    barColorContour = contour;
+    ofBackground(background);
+}
+
+// void DataDisplay::setNumElements(int numElements){
+
+//     // When !start and !swappingElements
+//     // Set sorting algorithm to default values
+//     // Generate random elements of the new set amount
+    
+//     generateRandomElements(numElements);
+
+// }
 
 void DataDisplay::setDisplayDimensions(int dispWidth, int dispHeight){
 

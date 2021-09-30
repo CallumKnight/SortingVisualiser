@@ -10,10 +10,11 @@ class DataDisplay{
         DataDisplay();
         ~DataDisplay();
 
-        void setup(int numElements, int dispWidth = ofGetWidth(), int dispHeight = ofGetHeight());
         void update();
         void draw();
         void togglePlayback();
+        void setColors(int r, int g, int b, int contour, int background);
+        // void setNumElements(int numElements);
 
     private:
         void setDisplayDimensions(int dispWidth, int dispHeight);
@@ -25,6 +26,10 @@ class DataDisplay{
         bool start;
         bool swappingElements;
         float swapOffset;
+        int barColorR;
+        int barColorG;
+        int barColorB;
+        int barColorContour;
 
         BaseSort* sortingAlgorithm;
 };

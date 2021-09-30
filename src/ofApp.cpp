@@ -5,23 +5,29 @@ void ofApp::setup(){
 
     // Set up GUI
     sliderGroup.setName("slider group");
-    sliderGroup.add(rSlider.set("r slider", 100, 0, 255));
+    sliderGroup.add(rSlider.set("r slider", 255, 0, 255));
     sliderGroup.add(gSlider.set("g slider", 100, 0, 255));
     sliderGroup.add(bSlider.set("b slider", 100, 0, 255));
+    sliderGroup.add(contourSlider.set("contour slider", 255, 0, 255));
+    sliderGroup.add(backgroundSlider.set("background slider", 0, 0, 255));
     gui.setup(sliderGroup);
+    displayGui = true;
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
 
+    dataDisplay.setColors(rSlider, gSlider, bSlider, contourSlider, backgroundSlider);
     dataDisplay.update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 
+    if(displayGui){
+        gui.draw();
+    }
     dataDisplay.draw();
-    gui.draw();
 }
 
 //--------------------------------------------------------------
@@ -30,6 +36,7 @@ void ofApp::keyPressed(int key){
     switch(key){
         case OF_KEY_RETURN:
             dataDisplay.togglePlayback();
+            displayGui = ! displayGui;
             break;
         default:
             break;

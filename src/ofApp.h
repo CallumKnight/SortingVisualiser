@@ -31,4 +31,7 @@ class ofApp : public ofBaseApp{
 		ofParameter<int> rSlider;
 		ofParameter<int> gSlider;
 		ofParameter<int> bSlider;
+		ofParameter<int> contourSlider;
+		ofParameter<int> backgroundSlider;
+		bool displayGui;
 };
