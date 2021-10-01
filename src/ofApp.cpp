@@ -5,29 +5,28 @@ void ofApp::setup(){
 
     // Set up GUI
     sliderGroup.setName("slider group");
-    sliderGroup.add(rSlider.set("r slider", 255, 0, 255));
-    sliderGroup.add(gSlider.set("g slider", 100, 0, 255));
-    sliderGroup.add(bSlider.set("b slider", 100, 0, 255));
-    sliderGroup.add(contourSlider.set("contour slider", 255, 0, 255));
-    sliderGroup.add(backgroundSlider.set("background slider", 0, 0, 255));
+    sliderGroup.add(elementsSlider.set("elements slider", 100, 2, 300));
+    sliderGroup.add(speedSlider.set("speed slider", 0.5, 0.1, 1));
+    sliderGroup.add(algorithmToggle.set(true));
     gui.setup(sliderGroup);
     displayGui = true;
+    dataDisplay.setGuiParams(elementsSlider, speedSlider, algorithmToggle);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
 
-    dataDisplay.setColors(rSlider, gSlider, bSlider, contourSlider, backgroundSlider);
     dataDisplay.update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
 
+    dataDisplay.setGuiParams(elementsSlider, speedSlider, algorithmToggle); // This might belong in the update function, noticed bug when in update function, didnt always reset to first element properly - experiment
+    dataDisplay.draw();
     if(displayGui){
         gui.draw();
     }
-    dataDisplay.draw();
 }
 
 //--------------------------------------------------------------

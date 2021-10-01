@@ -3,7 +3,7 @@
 #include <ctime>
 #include <cstdlib>
 
-#define DEFAULT_NUM_OF_ELEMENTS 10
+#define DEFAULT_NUM_OF_ELEMENTS 50
 
 DataDisplay::DataDisplay(){
 
@@ -13,6 +13,7 @@ DataDisplay::DataDisplay(){
     start = false;
     swappingElements = false;
     swapOffset = 0;
+    algorithmToggle = true;
 
     sortingAlgorithm = new BubbleSort();
 }
@@ -40,34 +41,35 @@ void DataDisplay::draw(){
     float barWidth = 0.6*(static_cast<float>(displayWidth)/elements.size());
     float barFootprint = barSpacing + barWidth;
 
+    ofColor barColor;
+    ofColor barContour(255); // White
+
     for(int i = 0; i < elements.size(); i++){
 
-        int r = (elements[i]/displayHeight)*barColorR;
-        int g = (elements[i]/displayHeight)*barColorG;
-        int b = (elements[i]/displayHeight)*barColorB;
+        barColor.setHsb((elements[i]/displayHeight)*255, 255, 255); // Rainbow effect
 
         if(i == sortingAlgorithm->getElementIndex()){
 
             ofFill();
-            ofSetColor(r, g, b);
+            ofSetColor(barColor);
             ofDrawRectangle((barFootprint*i) + swapOffset, ofGetHeight(), barWidth, elements[i]*(-1));
             ofNoFill();  
-            ofSetColor(barColorContour);
+            ofSetColor(barContour);
             ofDrawRectangle((barFootprint*i) + swapOffset, ofGetHeight(), barWidth, elements[i]*(-1));
         }
         else if(i == sortingAlgorithm->getCompareElementIndex()){
 
             ofFill();
-            ofSetColor(r, g, b);
+            ofSetColor(barColor);
             ofDrawRectangle((barFootprint*i) - swapOffset, ofGetHeight(), barWidth, elements[i]*(-1));
             ofNoFill();  
-            ofSetColor(barColorContour);
+            ofSetColor(barContour);
             ofDrawRectangle((barFootprint*i) - swapOffset, ofGetHeight(), barWidth, elements[i]*(-1));
         }
         else{
 
             ofFill();
-            ofSetColor(r, g, b);
+            ofSetColor(barColor);
             ofDrawRectangle(barFootprint*i, ofGetHeight(), barWidth, elements[i]*(-1));
         }
     }
@@ -83,14 +85,14 @@ void DataDisplay::draw(){
             swappingElements = false;
         }
 
-        while((ofGetElapsedTimef() - currentTime) < 0.002){
+        while((ofGetElapsedTimef() - currentTime) < 0.005*playbackSpeed){
             // Delay
         }
 
     }
     else{
         
-        while((ofGetElapsedTimef() - currentTime) < 0.2){
+        while((ofGetElapsedTimef() - currentTime) < 0.5*playbackSpeed){
             // Delay
         }
     }
@@ -101,24 +103,18 @@ void DataDisplay::togglePlayback(){
     start = !start;
 }
 
-void DataDisplay::setColors(int r, int g, int b, int contour, int background){
+void DataDisplay::setGuiParams(int numElems, float speed, bool algoToggle){
 
-    barColorR = r;
-    barColorG = g;
-    barColorB = b;
-    barColorContour = contour;
-    ofBackground(background);
+    if(!start && !swappingElements){ 
+        if(numElems != elements.size()){
+            generateRandomElements(numElems);
+            sortingAlgorithm->reset();
+        }
+        playbackSpeed = speed;
+        algorithmToggle = algoToggle;
+    }
+
 }
-
-// void DataDisplay::setNumElements(int numElements){
-
-//     // When !start and !swappingElements
-//     // Set sorting algorithm to default values
-//     // Generate random elements of the new set amount
-    
-//     generateRandomElements(numElements);
-
-// }
 
 void DataDisplay::setDisplayDimensions(int dispWidth, int dispHeight){
 

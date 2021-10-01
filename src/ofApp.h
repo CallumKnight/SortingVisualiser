@@ -28,10 +28,8 @@ class ofApp : public ofBaseApp{
 		
 		ofxPanel gui;
 		ofParameterGroup sliderGroup;
-		ofParameter<int> rSlider;
-		ofParameter<int> gSlider;
-		ofParameter<int> bSlider;
-		ofParameter<int> contourSlider;
-		ofParameter<int> backgroundSlider;
+		ofParameter<int> elementsSlider;
+		ofParameter<float> speedSlider;
+		ofParameter<bool> algorithmToggle; 
 		bool displayGui;
 };

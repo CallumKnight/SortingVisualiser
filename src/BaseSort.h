@@ -12,6 +12,7 @@ class BaseSort{
         int getCompareElementIndex();
         bool getSwapStatus();
         bool isSortComplete();
+        void reset();
 
         virtual void sort(const std::vector<float> &elements) = 0;
 

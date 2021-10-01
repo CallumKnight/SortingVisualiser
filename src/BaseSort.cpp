@@ -33,3 +33,12 @@ bool BaseSort::isSortComplete(){
 
     return sortComplete;
 }
+
+void BaseSort::reset(){
+
+    iteration = 0;
+    elementIndex = 0;
+    compareElementIndex = 1;
+    swapStatus = false;
+    sortComplete = false;
+}
