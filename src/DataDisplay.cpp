@@ -7,14 +7,6 @@
 
 DataDisplay::DataDisplay(){
 
-    setDisplayDimensions(ofGetWidth(), ofGetHeight());
-    generateRandomElements(DEFAULT_NUM_OF_ELEMENTS);
-
-    start = false;
-    swappingElements = false;
-    swapOffset = 0;
-    algorithmToggle = true;
-
     sortingAlgorithm = new BubbleSort();
 }
 
@@ -23,13 +15,35 @@ DataDisplay::~DataDisplay(){
     delete sortingAlgorithm;
 }
 
+void DataDisplay::setup(){
+
+    gui.setup();
+    setDisplayDimensions(ofGetWidth(), ofGetHeight());
+    generateRandomElements(gui.getElements());
+    playbackStatus = false;
+    playbackSpeed = gui.getSpeed();
+    swappingElements = false;
+    swapOffset = 0;
+}
+
 void DataDisplay::update(){
 
-    if(start && !swappingElements){
+    if(!swappingElements){
 
-        sortingAlgorithm->sort(elements);
-        swappingElements = sortingAlgorithm->getSwapStatus();
-        start = !sortingAlgorithm->isSortComplete();
+        if(playbackStatus){
+
+            sortingAlgorithm->sort(elements);
+            swappingElements = sortingAlgorithm->getSwapStatus();
+            playbackStatus = !sortingAlgorithm->isSortComplete();
+        }
+        else{
+
+            if(gui.getElements() != elements.size()){
+                sortingAlgorithm->reset();
+                generateRandomElements(gui.getElements());
+            }
+            playbackSpeed = gui.getSpeed();
+        }
     }
 }
 
@@ -85,34 +99,27 @@ void DataDisplay::draw(){
             swappingElements = false;
         }
 
-        while((ofGetElapsedTimef() - currentTime) < 0.005*playbackSpeed){
+        while((ofGetElapsedTimef() - currentTime) < (0.001*(1/playbackSpeed))){
             // Delay
         }
+    }
+    else if(playbackStatus){
 
-    }
-    else{
-        
-        while((ofGetElapsedTimef() - currentTime) < 0.5*playbackSpeed){
+        while((ofGetElapsedTimef() - currentTime) < (1/playbackSpeed)){
             // Delay
         }
+    }      
+    else{
+
+        gui.draw();
     }
+
+    // Speed control could be improved
 }
 
 void DataDisplay::togglePlayback(){
     
-    start = !start;
-}
-
-void DataDisplay::setGuiParams(int numElems, float speed, bool algoToggle){
-
-    if(!start && !swappingElements){ 
-        if(numElems != elements.size()){
-            generateRandomElements(numElems);
-            sortingAlgorithm->reset();
-        }
-        playbackSpeed = speed;
-        algorithmToggle = algoToggle;
-    }
+    playbackStatus = !playbackStatus;
 
 }
 

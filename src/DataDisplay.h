@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "BaseSort.h"
+#include "Gui.h"
 #include <vector>
 
 class DataDisplay{
@@ -10,6 +11,7 @@ class DataDisplay{
         DataDisplay();
         ~DataDisplay();
 
+        void setup();
         void update();
         void draw();
         void togglePlayback();
@@ -22,12 +24,12 @@ class DataDisplay{
         std::vector<float> elements;
         int displayWidth;
         int displayHeight;
-        bool start;
+        bool playbackStatus;
+        float playbackSpeed;
         bool swappingElements;
         float swapOffset;
-        float playbackSpeed;
-        bool algorithmToggle;
 
+        Gui gui;
         BaseSort* sortingAlgorithm;
 };
 

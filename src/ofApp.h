@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxGui.h"
 #include "DataDisplay.h"
 
 class ofApp : public ofBaseApp{
@@ -25,11 +24,4 @@ class ofApp : public ofBaseApp{
 
 	private:
 		DataDisplay dataDisplay;
-		
-		ofxPanel gui;
-		ofParameterGroup sliderGroup;
-		ofParameter<int> elementsSlider;
-		ofParameter<float> speedSlider;
-		ofParameter<bool> algorithmToggle; 
-		bool displayGui;
 };

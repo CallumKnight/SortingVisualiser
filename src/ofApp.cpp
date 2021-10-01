@@ -3,14 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-    // Set up GUI
-    sliderGroup.setName("slider group");
-    sliderGroup.add(elementsSlider.set("elements slider", 100, 2, 300));
-    sliderGroup.add(speedSlider.set("speed slider", 0.5, 0.1, 1));
-    sliderGroup.add(algorithmToggle.set(true));
-    gui.setup(sliderGroup);
-    displayGui = true;
-    dataDisplay.setGuiParams(elementsSlider, speedSlider, algorithmToggle);
+    dataDisplay.setup();
 }
 
 //--------------------------------------------------------------
@@ -22,11 +15,7 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-    dataDisplay.setGuiParams(elementsSlider, speedSlider, algorithmToggle); // This might belong in the update function, noticed bug when in update function, didnt always reset to first element properly - experiment
     dataDisplay.draw();
-    if(displayGui){
-        gui.draw();
-    }
 }
 
 //--------------------------------------------------------------
@@ -35,7 +24,6 @@ void ofApp::keyPressed(int key){
     switch(key){
         case OF_KEY_RETURN:
             dataDisplay.togglePlayback();
-            displayGui = ! displayGui;
             break;
         default:
             break;
