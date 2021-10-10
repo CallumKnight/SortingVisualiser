@@ -3,10 +3,6 @@
 BubbleSort::BubbleSort(): BaseSort(){
 
     // Calls BaseSort constructor
-
-    // Sets BubbleSort parameters
-    elementIndex = -1;
-    compareElementIndex = 0;
 }
 
 BubbleSort::~BubbleSort(){

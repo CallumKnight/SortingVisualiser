@@ -3,8 +3,8 @@
 BaseSort::BaseSort(){
 
     iteration = 0;
-    elementIndex = 0;
-    compareElementIndex = 1;
+    elementIndex = -1;
+    compareElementIndex = 0;
     swapStatus = false;
     sortComplete = false;
 }

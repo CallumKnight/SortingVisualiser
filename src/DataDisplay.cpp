@@ -1,5 +1,6 @@
 #include "DataDisplay.h"
 #include "BubbleSort.h"
+#include "SelectionSort.h"
 #include <ctime>
 #include <cstdlib>
 
@@ -7,7 +8,7 @@
 
 DataDisplay::DataDisplay(){
 
-    sortingAlgorithm = new BubbleSort();
+    sortingAlgorithm = new SelectionSort();
 }
 
 DataDisplay::~DataDisplay(){
@@ -58,9 +59,11 @@ void DataDisplay::draw(){
     ofColor barColor;
     ofColor barContour(255); // White
 
+    ofBackground(0);
+
     for(int i = 0; i < elements.size(); i++){
 
-        barColor.setHsb((elements[i]/displayHeight)*255, 255, 255); // Rainbow effect
+        barColor.set(((elements[i]/displayHeight)*200)+55, 55, 55);
 
         if(i == sortingAlgorithm->getElementIndex()){
 
@@ -99,13 +102,13 @@ void DataDisplay::draw(){
             swappingElements = false;
         }
 
-        while((ofGetElapsedTimef() - currentTime) < (0.001*(1/playbackSpeed))){
+        while((ofGetElapsedTimef() - currentTime) < (0.01*(1/playbackSpeed))){
             // Delay
         }
     }
     else if(playbackStatus){
 
-        while((ofGetElapsedTimef() - currentTime) < (1/playbackSpeed)){
+        while((ofGetElapsedTimef() - currentTime) < (0.1/playbackSpeed)){
             // Delay
         }
     }      
